@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/clients")
+@RequestMapping(value = "/client")
 public class ClientResource {
 
     @Autowired
@@ -19,7 +19,7 @@ public class ClientResource {
 
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<?> getById(@PathVariable Long id){
+    public ResponseEntity<?> getById(@PathVariable Integer id){
         return new ResponseEntity<>(service.getById(id), HttpStatus.OK);
     }
 

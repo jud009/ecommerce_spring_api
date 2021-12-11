@@ -12,7 +12,7 @@ public class Client implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     private String name;
     private String email;
@@ -37,7 +37,7 @@ public class Client implements Serializable {
         this.type = type.getId();
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 

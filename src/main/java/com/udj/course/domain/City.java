@@ -16,7 +16,7 @@ public class City implements Serializable {
 
     private String name;
 
-    @JsonManagedReference
+    @JsonManagedReference //quero mostrar o estado na serialização, vai ser serializado
     @ManyToOne
     @JoinColumn(name = "state_id")
     private State state;
