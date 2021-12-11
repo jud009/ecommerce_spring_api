@@ -40,6 +40,9 @@ public class CourseApplication implements CommandLineRunner {
     @Autowired
     private OrderRepository orderRepository;
 
+    @Autowired
+    private OrderItemRepository orderItemRepository;
+
     public static void main(String[] args) {
         SpringApplication.run(CourseApplication.class, args);
     }
@@ -113,7 +116,17 @@ public class CourseApplication implements CommandLineRunner {
 
         orderRepository.saveAll(Arrays.asList(order, order2));
         paymentRepository.saveAll(Arrays.asList(pay1, pay2));
+
+        OrderItem oi1 = new OrderItem(order, p1, 0.00, 1, p1.getPrice());
+        OrderItem oi2 = new OrderItem(order, p2, 0.00, 2, 80.00);
+        OrderItem oi3 = new OrderItem(order2, p2, 0.00, 1, p2.getPrice());
+
+        order.getItems().addAll(Arrays.asList(oi1, oi2));
+        order2.getItems().add(oi3);
+
+        p1.getItems().add(oi1);
+        p2.getItems().add(oi3);
+
+        orderItemRepository.saveAll(Arrays.asList(oi1, oi2, oi3));
     }
-
-
 }

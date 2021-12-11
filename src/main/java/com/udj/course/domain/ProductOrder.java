@@ -3,7 +3,9 @@ package com.udj.course.domain;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 public class ProductOrder implements Serializable {
@@ -25,6 +27,8 @@ public class ProductOrder implements Serializable {
     @JoinColumn(name = "address_id")
     private Address deliveryAddress;
 
+    @OneToMany(mappedBy = "id.productOrder")
+    private Set<OrderItem> items = new HashSet<>();
 
     public ProductOrder() {
     }
@@ -73,6 +77,10 @@ public class ProductOrder implements Serializable {
 
     public void setDeliveryAddress(Address deliveryAddress) {
         this.deliveryAddress = deliveryAddress;
+    }
+
+    public Set<OrderItem> getItems() {
+        return items;
     }
 
     @Override
