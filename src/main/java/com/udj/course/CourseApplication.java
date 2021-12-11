@@ -2,12 +2,14 @@ package com.udj.course;
 
 import com.udj.course.domain.*;
 import com.udj.course.domain.enums.ClientType;
+import com.udj.course.domain.enums.PaymentState;
 import com.udj.course.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.List;
 
@@ -31,6 +33,12 @@ public class CourseApplication implements CommandLineRunner {
 
     @Autowired
     private AddressRepository addressRepository;
+
+    @Autowired
+    private PaymentRepository paymentRepository;
+
+    @Autowired
+    private OrderRepository orderRepository;
 
     public static void main(String[] args) {
         SpringApplication.run(CourseApplication.class, args);
@@ -69,7 +77,6 @@ public class CourseApplication implements CommandLineRunner {
         stateRepository.saveAll(Arrays.asList(sp, mg));
         cityRepository.saveAll(Arrays.asList(spCity, camp, ub));
 
-
         Client client = new Client(
                 "Maria Silva",
                 "maria@gmail.com",
@@ -89,6 +96,24 @@ public class CourseApplication implements CommandLineRunner {
 
         clientRepository.save(client);
         addressRepository.saveAll(Arrays.asList(adr1, adr2));
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
+        ProductOrder order = new ProductOrder(sdf.parse("30/09/2020 10:32"), client, adr1);
+        ProductOrder order2 = new ProductOrder(sdf.parse("10/10/2020 19:35"), client, adr2);
+
+        Payment pay1 = new CardPayment(PaymentState.PAYED, order, 6);
+        order.setPayment(pay1);
+
+        Payment pay2 = new PaymentTicket(PaymentState.PENDING, order2,
+                null, sdf.parse("20/10/2020 00:00"));
+        order2.setPayment(pay2);
+
+        client.getOrders().addAll(Arrays.asList(order, order2));
+
+        orderRepository.saveAll(Arrays.asList(order, order2));
+        paymentRepository.saveAll(Arrays.asList(pay1, pay2));
     }
+
 
 }

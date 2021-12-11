@@ -1,20 +1,23 @@
 package com.udj.course.domain;
 
+import com.udj.course.domain.enums.PaymentState;
+
+import javax.persistence.Entity;
 import java.util.Date;
 
-//boleto
-public class PaymentSlip extends Payment {
+@Entity
+public class PaymentTicket extends Payment {
 
     private Date startDate;
     private Date endDate;
 
-    public PaymentSlip(){
+    public PaymentTicket(){
         super();
     }
 
-    public PaymentSlip(Integer id, Integer paymentState, Order order,
-                       Date startDate, Date endDate) {
-        super(id, paymentState, order);
+    public PaymentTicket(PaymentState paymentState, ProductOrder productOrder,
+                         Date startDate, Date endDate) {
+        super(paymentState, productOrder);
         this.startDate = startDate;
         this.endDate = endDate;
     }

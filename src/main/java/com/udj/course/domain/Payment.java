@@ -2,19 +2,29 @@ package com.udj.course.domain;
 
 import com.udj.course.domain.enums.PaymentState;
 
-public class Payment {
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Objects;
 
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED) //tabelão
+public abstract class Payment implements Serializable {
+    @Id
     private Integer id;
+
     private Integer paymentState;
-    private Order order;
+
+    @OneToOne
+    @JoinColumn(name = "pedido_id")
+    @MapsId //order id the same payment id
+    private ProductOrder productOrder;
 
     public Payment() {
     }
 
-    public Payment(Integer id, Integer paymentState, Order order) {
-        this.id = id;
-        this.paymentState = paymentState;
-        this.order = order;
+    public Payment(PaymentState paymentState, ProductOrder productOrder) {
+        this.paymentState = paymentState.getId();
+        this.productOrder = productOrder;
     }
 
     public Integer getId() {
@@ -25,19 +35,32 @@ public class Payment {
         this.id = id;
     }
 
-    public Integer getPaymentState() {
-        return paymentState;
+    public PaymentState getPaymentState() {
+        return PaymentState.getById(paymentState);
     }
 
-    public void setPaymentState(Integer paymentState) {
-        this.paymentState = paymentState;
+    public void setPaymentState(PaymentState paymentState) {
+        this.paymentState = paymentState.getId();
     }
 
-    public Order getOrder() {
-        return order;
+    public ProductOrder getOrder() {
+        return productOrder;
     }
 
-    public void setOrder(Order order) {
-        this.order = order;
+    public void setOrder(ProductOrder productOrder) {
+        this.productOrder = productOrder;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Payment payment = (Payment) o;
+        return Objects.equals(id, payment.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

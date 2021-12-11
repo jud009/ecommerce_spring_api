@@ -27,6 +27,10 @@ public class Client implements Serializable {
     @CollectionTable(name = "phone_number")
     private Set<String> phoneNumbers = new HashSet<>();
 
+
+    @OneToMany(mappedBy = "client")
+    private List<ProductOrder> productOrders = new ArrayList<>();
+
     public Client() {
     }
 
@@ -75,6 +79,10 @@ public class Client implements Serializable {
 
     public List<Address> getAddresses() {
         return addresses;
+    }
+
+    public List<ProductOrder> getOrders() {
+        return productOrders;
     }
 
     public void setAddresses(List<Address> addresses) {
