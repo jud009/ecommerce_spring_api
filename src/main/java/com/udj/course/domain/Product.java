@@ -17,7 +17,7 @@ public class Product implements Serializable {
     private String name;
     private Double price;
 
-    @JsonBackReference //não vai aparecer
+    @JsonIgnore //não vai aparecer
     @ManyToMany
     @JoinTable(
             name = "CATEGORY_PRODUCT",

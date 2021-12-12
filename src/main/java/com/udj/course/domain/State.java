@@ -1,7 +1,6 @@
 package com.udj.course.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -18,7 +17,7 @@ public class State implements Serializable {
 
     private String name;
 
-    @JsonBackReference //omitir cidades
+    @JsonIgnore //omitir cidades
     @OneToMany(mappedBy = "state")
     private List<City> cities = new ArrayList<>();
 

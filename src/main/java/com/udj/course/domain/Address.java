@@ -1,6 +1,6 @@
 package com.udj.course.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -19,7 +19,7 @@ public class Address implements Serializable {
     private String neighborhood;
     private String zipCode;
 
-    @JsonBackReference //não vai aparecer
+    @JsonIgnore //não vai aparecer
     @ManyToOne
     @JoinColumn(name = "client_id")
     private Client client;
