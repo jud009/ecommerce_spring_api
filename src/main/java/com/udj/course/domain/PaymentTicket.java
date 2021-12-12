@@ -1,5 +1,6 @@
 package com.udj.course.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.udj.course.domain.enums.PaymentState;
 
 import javax.persistence.Entity;
@@ -8,7 +9,10 @@ import java.util.Date;
 @Entity
 public class PaymentTicket extends Payment {
 
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private Date startDate;
+
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private Date endDate;
 
     public PaymentTicket(){

@@ -1,5 +1,6 @@
 package com.udj.course.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.udj.course.domain.enums.PaymentState;
 
 import javax.persistence.*;
@@ -14,6 +15,7 @@ public abstract class Payment implements Serializable {
 
     private Integer paymentState;
 
+    @JsonBackReference
     @OneToOne
     @JoinColumn(name = "pedido_id")
     @MapsId //order id the same payment id
