@@ -12,15 +12,18 @@ import java.util.Optional;
 @Service
 public class CategoryService {
 
-    private static final String OBJECT_NOT_FOUND = CategoryService.class.getSimpleName()+ ": OBJETO NÃO ENCONTRADO";
+    private static final String OBJECT_NOT_FOUND = CategoryService.class.getSimpleName() + ": OBJETO NÃO ENCONTRADO";
 
     @Autowired
     private CategoryRepository repository;
 
     public Category findById(Long id) {
         Optional<Category> op = repository.findById(id);
-        return op.orElseThrow(()-> new ObjectNotFoundException(OBJECT_NOT_FOUND));
+        return op.orElseThrow(() -> new ObjectNotFoundException(OBJECT_NOT_FOUND));
     }
 
-
+    public Category insert(Category category) {
+        category.setId(null);
+        return repository.save(category);
+    }
 }
