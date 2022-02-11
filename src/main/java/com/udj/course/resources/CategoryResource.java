@@ -22,11 +22,19 @@ public class CategoryResource {
         return new ResponseEntity<>(service.findById(id), HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    //@RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     public ResponseEntity<Void> insert(@RequestBody Category category) {
         category = service.insert(category);
         URI uri = ServletUriComponentsBuilder.
                 fromCurrentRequest().path("/{id}").buildAndExpand(category.getId()).toUri();
         return ResponseEntity.created(uri).build();
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<Void> update(@RequestBody Category category, @PathVariable Long id) {
+        category.setId(id);
+        service.update(category);
+        return ResponseEntity.noContent().build();
     }
 }
