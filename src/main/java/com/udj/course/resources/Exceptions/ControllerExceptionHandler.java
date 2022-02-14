@@ -1,5 +1,6 @@
 package com.udj.course.resources.Exceptions;
 
+import com.udj.course.services.exceptions.DataIntegrityException;
 import com.udj.course.services.exceptions.ObjectNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,5 +22,13 @@ public class ControllerExceptionHandler {
         StandardError error = new StandardError(
                 HttpStatus.NOT_FOUND.value(), e.getMessage(), sdf.format(new Date()));
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(DataIntegrityException.class)
+    public ResponseEntity<StandardError> dataIntegrity(DataIntegrityException e, HttpServletRequest request) {
+        StandardError error = new StandardError(HttpStatus.BAD_REQUEST.value(),
+                e.getMessage(), sdf.format(new Date()));
+
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 }

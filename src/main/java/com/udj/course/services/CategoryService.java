@@ -3,8 +3,10 @@ package com.udj.course.services;
 
 import com.udj.course.domain.Category;
 import com.udj.course.repositories.CategoryRepository;
+import com.udj.course.services.exceptions.DataIntegrityException;
 import com.udj.course.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -13,6 +15,7 @@ import java.util.Optional;
 public class CategoryService {
 
     private static final String OBJECT_NOT_FOUND = CategoryService.class.getSimpleName() + ": OBJETO NÃO ENCONTRADO";
+    private static final String CANT_DELETE = "DATA CANNOT BE DELETED";
 
     @Autowired
     private CategoryRepository repository;
@@ -27,8 +30,16 @@ public class CategoryService {
         return repository.save(category);
     }
 
-    public Category update(Category category){
+    public Category update(Category category) {
         findById(category.getId());
         return repository.save(category);
+    }
+
+    public void deleteById(long id) {
+        try {
+            repository.deleteById(id);
+        } catch (DataIntegrityViolationException e) {
+            throw new DataIntegrityException(CANT_DELETE);
+        }
     }
 }
