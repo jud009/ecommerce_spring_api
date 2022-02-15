@@ -52,6 +52,10 @@ public class CourseApplication implements CommandLineRunner {
 
         Category c1 = new Category("Informática");
         Category c2 = new Category("Escritório");
+        Category c3 = new Category("Tecnologia");
+        Category c4 = new Category("Saúde");
+        Category c5 = new Category("Cama mesa e banho");
+        Category c6 = new Category("Esporte");
 
         Product p1 = new Product("Computador", 2000.00);
         Product p2 = new Product("Impressora", 800.00);
@@ -64,7 +68,7 @@ public class CourseApplication implements CommandLineRunner {
         p2.getCategories().addAll(Arrays.asList(c1, c2));
         p3.getCategories().add(c1);
 
-        categoryRepository.saveAll(Arrays.asList(c1, c2));
+        categoryRepository.saveAll(Arrays.asList(c1, c2, c3, c4, c5, c6));
         productRepository.saveAll(Arrays.asList(p1, p2, p3));
 
         State sp = new State("São Paulo");

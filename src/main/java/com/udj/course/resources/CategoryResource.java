@@ -4,6 +4,7 @@ import com.udj.course.domain.Category;
 import com.udj.course.dto.CategoryDTO;
 import com.udj.course.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +23,7 @@ public class CategoryResource {
 
 
     @GetMapping
-    public ResponseEntity<List<CategoryDTO>> findAll(){
+    public ResponseEntity<List<CategoryDTO>> findAll() {
         List<Category> categories = service.findAll();
         List<CategoryDTO> categoryDTOList = categories.stream().map(CategoryDTO::new).collect(Collectors.toList());
         return ResponseEntity.ok().body(categoryDTOList);
@@ -31,6 +32,19 @@ public class CategoryResource {
     @GetMapping(value = "/{id}")
     public ResponseEntity<?> findById(@PathVariable Long id) {
         return new ResponseEntity<>(service.findById(id), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/page")
+    public ResponseEntity<Page<CategoryDTO>> findPage(
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "linesPerPage", defaultValue = "24") int linesPerPage,
+            @RequestParam(value = "direction", defaultValue = "ASC") String direction,
+            @RequestParam(value = "orderBy", defaultValue = "name") String orderBy) {
+
+        Page<Category> categoryPage = service.findPage(page, linesPerPage, direction, orderBy);
+        Page<CategoryDTO> categoryDTOList = categoryPage.map(CategoryDTO::new);
+
+        return ResponseEntity.ok().body(categoryDTOList);
     }
 
     //@RequestMapping(method = RequestMethod.POST)
