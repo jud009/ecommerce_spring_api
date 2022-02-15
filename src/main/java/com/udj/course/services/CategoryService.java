@@ -2,6 +2,7 @@ package com.udj.course.services;
 
 
 import com.udj.course.domain.Category;
+import com.udj.course.dto.CategoryDTO;
 import com.udj.course.repositories.CategoryRepository;
 import com.udj.course.services.exceptions.DataIntegrityException;
 import com.udj.course.services.exceptions.ObjectNotFoundException;
@@ -55,5 +56,9 @@ public class CategoryService {
         } catch (DataIntegrityViolationException e) {
             throw new DataIntegrityException(CANT_DELETE);
         }
+    }
+
+    public Category fromDT0(CategoryDTO obj){
+        return new Category(obj.getId(), obj.getName());
     }
 }
