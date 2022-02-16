@@ -9,6 +9,9 @@ public class StandardError implements Serializable {
     private String message;
     private String moment;
 
+    public StandardError() {
+    }
+
     public StandardError(Integer errorType, String message, String moment) {
         this.errorType = errorType;
         this.message = message;
