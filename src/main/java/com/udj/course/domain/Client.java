@@ -26,7 +26,6 @@ public class Client implements Serializable {
     @CollectionTable(name = "phone_number")
     private Set<String> phoneNumbers = new HashSet<>();
 
-
     @JsonIgnore
     @OneToMany(mappedBy = "client")
     private List<ProductOrder> productOrders = new ArrayList<>();
@@ -34,17 +33,11 @@ public class Client implements Serializable {
     public Client() {
     }
 
-    public Client(Integer id, String name, String email) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-    }
-
     public Client(String name, String email, String cpfOrCnpj, ClientType type) {
         this.name = name;
         this.email = email;
         this.cpfOrCnpj = cpfOrCnpj;
-        this.type = type.getId();
+        this.type = (type == null) ? null : type.getId();
     }
 
     public void setId(Integer id) {

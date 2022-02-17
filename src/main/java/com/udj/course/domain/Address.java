@@ -1,5 +1,7 @@
 package com.udj.course.domain;
 
+
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -19,10 +21,12 @@ public class Address implements Serializable {
     private String neighborhood;
     private String zipCode;
 
-    @JsonIgnore //não vai aparecer
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "client_id")
     private Client client;
+
+    //JSON IGNORE DON`T SHOW THE DATA CLASS IN REQUEST
 
     @ManyToOne
     @JoinColumn(name = "city_id")

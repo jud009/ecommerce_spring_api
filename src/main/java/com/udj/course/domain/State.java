@@ -17,7 +17,9 @@ public class State implements Serializable {
 
     private String name;
 
-    @JsonIgnore //omitir cidades
+    // JsonIgnore = omitir cidades
+
+    @JsonIgnore
     @OneToMany(mappedBy = "state")
     private List<City> cities = new ArrayList<>();
 

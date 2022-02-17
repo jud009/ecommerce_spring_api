@@ -3,6 +3,7 @@ package com.udj.course.services;
 
 import com.udj.course.Constants;
 import com.udj.course.domain.Category;
+import com.udj.course.domain.Client;
 import com.udj.course.dto.CategoryDTO;
 import com.udj.course.repositories.CategoryRepository;
 import com.udj.course.services.exceptions.DataIntegrityException;
@@ -44,8 +45,9 @@ public class CategoryService {
     }
 
     public Category update(Category category) {
-        findById(category.getId());
-        return repository.save(category);
+        Category newObj = findById(category.getId());
+        updateData(newObj, category);
+        return repository.save(newObj);
     }
 
     public void deleteById(long id) {
@@ -58,5 +60,9 @@ public class CategoryService {
 
     public Category fromDT0(CategoryDTO obj){
         return new Category(obj.getId(), obj.getName());
+    }
+
+    private void updateData(Category newObj, Category obj) {
+        newObj.setName(obj.getName());
     }
 }

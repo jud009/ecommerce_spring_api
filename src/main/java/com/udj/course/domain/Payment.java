@@ -1,6 +1,5 @@
 package com.udj.course.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.udj.course.domain.enums.PaymentState;
 
@@ -26,7 +25,7 @@ public abstract class Payment implements Serializable {
     }
 
     public Payment(PaymentState paymentState, ProductOrder productOrder) {
-        this.paymentState = paymentState.getId();
+        this.paymentState = (paymentState == null) ? null : paymentState.getId();
         this.productOrder = productOrder;
     }
 

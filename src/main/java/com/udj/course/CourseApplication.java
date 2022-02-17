@@ -101,7 +101,7 @@ public class CourseApplication implements CommandLineRunner {
 
         client.getAddresses().addAll(Arrays.asList(adr1, adr2));
 
-        clientRepository.save(client);
+        clientRepository.saveAll(Arrays.asList(client));
         addressRepository.saveAll(Arrays.asList(adr1, adr2));
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");

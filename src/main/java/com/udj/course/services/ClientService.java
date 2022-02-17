@@ -56,7 +56,7 @@ public class ClientService {
     }
 
     public Client fromDT0(ClientDTO obj){
-        return new Client(obj.getId(), obj.getName(), obj.getEmail());
+        return new Client(obj.getName(), obj.getEmail(), null, null);
     }
 
     private void updateData(Client newObj, Client obj) {
