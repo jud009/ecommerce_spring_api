@@ -2,6 +2,7 @@ package com.udj.course.resources;
 
 import com.udj.course.domain.Client;
 import com.udj.course.dto.ClientDTO;
+import com.udj.course.dto.ClientNewDTO;
 import com.udj.course.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -48,7 +49,7 @@ public class ClientResource {
     }
 
     @PostMapping
-    public ResponseEntity<Void> insert(@Valid @RequestBody ClientDTO obj) {
+    public ResponseEntity<Void> insert(@Valid @RequestBody ClientNewDTO obj) {
         Client client = service.fromDT0(obj);
         client = service.insert(client);
         URI uri = ServletUriComponentsBuilder.

@@ -9,7 +9,7 @@ public class City implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     private String name;
 
@@ -20,12 +20,18 @@ public class City implements Serializable {
     public City() {
     }
 
+    public City(Integer id, String name, State state) {
+        this.id = id;
+        this.name = name;
+        this.state = state;
+    }
+
     public City(String name, State state) {
         this.name = name;
         this.state = state;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
