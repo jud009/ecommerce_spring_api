@@ -1,8 +1,6 @@
 package com.udj.course.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.udj.course.domain.enums.ClientType;
 
 import javax.persistence.*;
@@ -36,11 +34,21 @@ public class Client implements Serializable {
     public Client() {
     }
 
+    public Client(Integer id, String name, String email) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+    }
+
     public Client(String name, String email, String cpfOrCnpj, ClientType type) {
         this.name = name;
         this.email = email;
         this.cpfOrCnpj = cpfOrCnpj;
         this.type = type.getId();
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public Integer getId() {

@@ -31,3 +31,4 @@ public class FieldMessage implements Serializable {
         this.message = message;
     }
 }
+

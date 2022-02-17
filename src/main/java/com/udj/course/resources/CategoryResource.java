@@ -70,5 +70,4 @@ public class CategoryResource {
         service.deleteById(id);
         return ResponseEntity.noContent().build();
     }
-
 }

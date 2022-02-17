@@ -1,6 +1,7 @@
 package com.udj.course.services;
 
 
+import com.udj.course.Constants;
 import com.udj.course.domain.Category;
 import com.udj.course.dto.CategoryDTO;
 import com.udj.course.repositories.CategoryRepository;
@@ -19,9 +20,6 @@ import java.util.Optional;
 @Service
 public class CategoryService {
 
-    private static final String OBJECT_NOT_FOUND = CategoryService.class.getSimpleName() + ": OBJETO NÃO ENCONTRADO";
-    private static final String CANT_DELETE = "DATA CANNOT BE DELETED";
-
     @Autowired
     private CategoryRepository repository;
 
@@ -32,7 +30,7 @@ public class CategoryService {
 
     public Category findById(Long id) {
         Optional<Category> op = repository.findById(id);
-        return op.orElseThrow(() -> new ObjectNotFoundException(OBJECT_NOT_FOUND));
+        return op.orElseThrow(() -> new ObjectNotFoundException(Constants.OBJECT_NOT_FOUND));
     }
 
     public Page<Category> findPage(int page, int linesPerPage, String direction, String orderBy) {
@@ -54,7 +52,7 @@ public class CategoryService {
         try {
             repository.deleteById(id);
         } catch (DataIntegrityViolationException e) {
-            throw new DataIntegrityException(CANT_DELETE);
+            throw new DataIntegrityException(Constants.CANT_DELETE);
         }
     }
 
