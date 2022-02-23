@@ -1,21 +1,47 @@
 package com.udj.course.dto;
 
+import com.udj.course.services.validation.ClientInsert;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
+import static com.udj.course.Constants.CANT_BE_EMPTY;
+import static com.udj.course.Constants.INVALID_EMAIL;
+
+@ClientInsert
 public class ClientNewDTO implements Serializable {
 
+    @NotEmpty(message = CANT_BE_EMPTY)
+    @Size(min = 4, max = 50, message = "Length should be between 4 and 50 chars")
     private String name;
+
+    @NotEmpty(message = CANT_BE_EMPTY)
+    @Email(message = INVALID_EMAIL)
     private String email;
+
+    @NotEmpty(message = CANT_BE_EMPTY)
+
     private String cpfOrCnpj;
+
     private Integer type;
 
+    @NotEmpty(message = CANT_BE_EMPTY)
     private String publicPlace;
+
+    @NotEmpty(message = CANT_BE_EMPTY)
     private String number;
+
     private String addressReference;
     private String neighborhood;
+
+    @NotEmpty(message = CANT_BE_EMPTY)
     private String zipCode;
 
+    @NotEmpty(message = CANT_BE_EMPTY)
     private String phone1;
+
     private String phone2;
     private String phone3;
 
