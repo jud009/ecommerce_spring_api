@@ -2,6 +2,7 @@ package com.udj.course.dto;
 
 import com.udj.course.Constants;
 import com.udj.course.domain.Client;
+import com.udj.course.services.validation.ClientUpdate;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -11,6 +12,7 @@ import java.io.Serializable;
 import static com.udj.course.Constants.CANT_BE_EMPTY;
 import static com.udj.course.Constants.INVALID_EMAIL;
 
+@ClientUpdate
 public class ClientDTO implements Serializable {
 
     private Integer id;

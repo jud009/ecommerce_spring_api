@@ -2,45 +2,41 @@ package com.udj.course.services.validation;
 
 import com.udj.course.domain.Client;
 import com.udj.course.domain.enums.ClientType;
+import com.udj.course.dto.ClientDTO;
 import com.udj.course.dto.ClientNewDTO;
 import com.udj.course.repositories.ClientRepository;
 import com.udj.course.resources.Exceptions.FieldMessage;
 import com.udj.course.services.validation.utils.BR;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.servlet.HandlerMapping;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
-public class ClientInsertValidator implements ConstraintValidator<ClientInsert, ClientNewDTO> {
+public class ClientUpdateValidator implements ConstraintValidator<ClientUpdate, ClientDTO> {
+
+    @Autowired
+    private HttpServletRequest request;
 
     @Autowired
     private ClientRepository repository;
 
-    private final static String ERROR_FIELD_NAME = "CpfOrCnpj";
     private final static String ERROR_FIELD_EMAIL = "Email";
-    private final static String INVALID_CPF = "CPF inválido.";
-    private final static String INVALID_CNPJ = "CNPJ inválido.";
     private final static String INVALID_EMAIL = "Email inválido.";
 
     @Override
-    public void initialize(ClientInsert ann) {
+    public void initialize(ClientUpdate ann) {
     }
 
     @Override
-    public boolean isValid(ClientNewDTO objDto, ConstraintValidatorContext context) {
+    public boolean isValid(ClientDTO objDto, ConstraintValidatorContext context) {
         List<FieldMessage> errors = new ArrayList<>();
 
-        if (isCNPJInvalid(objDto)) {
-            errors.add(new FieldMessage(ERROR_FIELD_NAME, INVALID_CNPJ));
-        }
-
-        if (isCPFInvalid(objDto)) {
-            errors.add(new FieldMessage(ERROR_FIELD_NAME, INVALID_CPF));
-        }
-
-        if (!isEmailValid(objDto)){
+        if (!isEmailValid(objDto)) {
             errors.add(new FieldMessage(ERROR_FIELD_EMAIL, INVALID_EMAIL));
         }
 
@@ -53,16 +49,13 @@ public class ClientInsertValidator implements ConstraintValidator<ClientInsert, 
         return errors.isEmpty();
     }
 
-    private boolean isCPFInvalid(ClientNewDTO objDTO) {
-        return objDTO.getType().equals(ClientType.PERSONAL.getId()) && !BR.isValidCPF(objDTO.getCpfOrCnpj());
-    }
+    private boolean isEmailValid(ClientDTO objDTO) {
+        Map<String, String> map = (Map<String, String>)
+                request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
 
-    private boolean isCNPJInvalid(ClientNewDTO objDTO) {
-        return objDTO.getType().equals(ClientType.ENTERPRISE.getId()) && !BR.isValidCNPJ(objDTO.getCpfOrCnpj());
-    }
+        Integer uriId = Integer.parseInt(map.get("id"));
 
-    private boolean isEmailValid(ClientNewDTO objDTO) {
         Client aux = repository.findByEmail(objDTO.getEmail());
-        return aux == null;
+        return aux != null && uriId.equals(aux.getId());
     }
 }
