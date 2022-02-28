@@ -15,7 +15,10 @@ public class Client implements Serializable {
     private Integer id;
 
     private String name;
+
+    //@Column(unique = true) //don't allow the same email
     private String email;
+
     private String cpfOrCnpj;
     private Integer type;
 
