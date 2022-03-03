@@ -1,6 +1,7 @@
 package com.udj.course.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -39,6 +40,14 @@ public class ProductOrder implements Serializable {
         this.instant = instant;
         this.client = client;
         this.deliveryAddress = deliveryAddress;
+    }
+
+    public Double getTotalValue() {
+        double sum = 0.0;
+        for (OrderItem item : items) {
+            sum += item.getSubTotal();
+        }
+        return sum;
     }
 
     public Integer getId() {
