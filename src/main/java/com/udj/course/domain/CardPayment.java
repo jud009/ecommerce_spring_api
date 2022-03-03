@@ -1,10 +1,12 @@
 package com.udj.course.domain;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.udj.course.domain.enums.PaymentState;
 
 import javax.persistence.Entity;
 
 @Entity
+@JsonTypeName("CardPayment")
 public class CardPayment extends Payment{
 
     private Integer installments;

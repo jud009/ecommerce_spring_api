@@ -33,6 +33,14 @@ public class OrderItem implements Serializable {
         return (price - discount) * quantity;
     }
 
+    public void setOrder(ProductOrder order){
+        id.setOrder(order);
+    }
+
+    public void setProduct(Product product){
+        id.setProduct(product);
+    }
+
     public OrderItemPK getId() {
         return id;
     }
